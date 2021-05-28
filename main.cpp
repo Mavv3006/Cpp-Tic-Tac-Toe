@@ -12,6 +12,10 @@ int set_bits(const int bits[], const size_t size) {
     return result;
 }
 
+int set_bit(int power) {
+    return 1 << power;
+}
+
 int main() {
     return 0;
 }
