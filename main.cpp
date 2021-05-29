@@ -7,6 +7,20 @@ int calcArrSize(const int *xArr, const int *oArr);
 
 void printArray(const int *arr, size_t size);
 
+int set_bits(const int *bits, size_t size);
+
+const int all_lines[]{
+        set_bits(new int[3]{0, 1, 2}, 3), // 1st row
+        set_bits(new int[3]{3, 4, 5}, 3), // 2nd row
+        set_bits(new int[3]{6, 7, 8}, 3), // 3rd row
+        set_bits(new int[3]{0, 3, 6}, 3), // 1st column
+        set_bits(new int[3]{1, 4, 7}, 3), // 2nd column
+        set_bits(new int[3]{2, 5, 8}, 3), // 3rd column
+        set_bits(new int[3]{0, 4, 8}, 3), // falling diagonal
+        set_bits(new int[3]{2, 4, 6}, 3), // rising diagonal
+};
+
+
 int set_bits(const int *bits, const size_t size) {
     int result = 0;
     for (int i = 0; i < size; i++) {
@@ -116,11 +130,8 @@ CustomArray next_states(int state, int player) {
 
 
 int main() {
-    int state = set_bits(new int[6]{2, 3, 5, 9 + 1, 9 + 4, 9 + 6}, 6);
-    std::cout << "state:\n" << to_board(state) << "\nnext states:\n";
-    CustomArray nextStates = next_states(state, 0);
-    for (int i = 0; i < nextStates.size; i++) {
-        std::cout << to_board(nextStates.arr[i]) << std::endl;
+    for (int all_line : all_lines) {
+        std::cout << to_board(all_line) << std::endl;
     }
 
     return 0;
