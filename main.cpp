@@ -9,16 +9,18 @@ void printArray(const int *arr, size_t size);
 
 int set_bits(const int *bits, size_t size);
 
-const int all_lines[]{
-        set_bits(new int[3]{0, 1, 2}, 3), // 1st row
-        set_bits(new int[3]{3, 4, 5}, 3), // 2nd row
-        set_bits(new int[3]{6, 7, 8}, 3), // 3rd row
-        set_bits(new int[3]{0, 3, 6}, 3), // 1st column
-        set_bits(new int[3]{1, 4, 7}, 3), // 2nd column
-        set_bits(new int[3]{2, 5, 8}, 3), // 3rd column
-        set_bits(new int[3]{0, 4, 8}, 3), // falling diagonal
-        set_bits(new int[3]{2, 4, 6}, 3), // rising diagonal
-};
+int *all_lines() {
+    return new int[]{
+            set_bits(new int[3]{0, 1, 2}, 3), // 1st row
+            set_bits(new int[3]{3, 4, 5}, 3), // 2nd row
+            set_bits(new int[3]{6, 7, 8}, 3), // 3rd row
+            set_bits(new int[3]{0, 3, 6}, 3), // 1st column
+            set_bits(new int[3]{1, 4, 7}, 3), // 2nd column
+            set_bits(new int[3]{2, 5, 8}, 3), // 3rd column
+            set_bits(new int[3]{0, 4, 8}, 3), // falling diagonal
+            set_bits(new int[3]{2, 4, 6}, 3), // rising diagonal
+    };
+}
 
 
 int set_bits(const int *bits, const size_t size) {
@@ -50,7 +52,7 @@ std::string to_board(int state) {
     return result;
 }
 
-/*
+/**
  * Given a `state` that is represented as a number, the function `empty(state)`
  * returns the set of indexes of those cells such that neither player `X` nor
  * player `O` has placed a mark in the cell.  Note that there are 9 cells on
@@ -112,7 +114,7 @@ void printArray(const int *arr, size_t size) {
     std::cout << " ]\n";
 }
 
-/*
+/**
  * Given a `state` and the `player` who is next to move, the function
  * `next_states(state, player)` computes the set of states that can be
  * reached from `state`. Note that player `X` is encoded as the number
@@ -128,11 +130,33 @@ CustomArray next_states(int state, int player) {
     return CustomArray(resultArr, emptyCells.size);
 }
 
+/**
+ *
+ * @param state
+ * @param player
+ * @return
+ */
+int utility(int state, int player) {
+    for (int i = 0; i < 8; i++) {
+        int mask = all_lines()[i];
+        if ((state & mask) == mask) {
+            return 1 - 2 * player; // player 'X' has won
+        }
+        if (((state >> 9) & mask) == mask) {
+            return -1 + 2 * player; // player 'O' has won
+        }
+    }
+    if ((state & 511) | ((state >> 9) != 511)) {
+        return 2; // the board is not yet filled
+    }
+    return 0; // it's a draw
+}
+
 
 int main() {
-    for (int all_line : all_lines) {
-        std::cout << to_board(all_line) << std::endl;
-    }
+    int s1 = set_bits(new int[]{0, 2, 3, 6, 9 + 1, 9 + 4, 9 + 5}, 7);
+    std::cout << to_board(s1) << std::endl;
+    std::cout << utility(s1, 0);
 
     return 0;
 }
