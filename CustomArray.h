@@ -2,21 +2,21 @@
 // Created by Marvin on 28.05.2021.
 //
 
-#ifndef TIC_TAC_TOE_EMPTYARRAY_H
-#define TIC_TAC_TOE_EMPTYARRAY_H
+#ifndef TIC_TAC_TOE_CUSTOMARRAY_H
+#define TIC_TAC_TOE_CUSTOMARRAY_H
 
 #include <iostream>
 
-class EmptyArray {
+class CustomArray {
 public:
     size_t size;
     int *arr;
 
-    EmptyArray(int *arr, size_t size) {
+    CustomArray(int *arr, size_t size) {
         this->size = size;
         this->arr = arr;
     }
 };
 
 
-#endif //TIC_TAC_TOE_EMPTYARRAY_H
+#endif //TIC_TAC_TOE_CUSTOMARRAY_H

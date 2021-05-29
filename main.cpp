@@ -1,10 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include "EmptyArray.h"
-
-int players[2]{0, 1};
-int start = 0;
+#include "CustomArray.h"
 
 int calcArrSize(const int *xArr, const int *oArr);
 
@@ -39,7 +36,18 @@ std::string to_board(int state) {
     return result;
 }
 
-EmptyArray empty(int state) {
+/*
+ * Given a `state` that is represented as a number, the function `empty(state)`
+ * returns the set of indexes of those cells such that neither player `X` nor
+ * player `O` has placed a mark in the cell.  Note that there are 9 cells on
+ * the board.  Each of these cells can hold either an `'X'` or an `'O'`.
+ * If the $i^\textrm{th}$ cell is marked with a `'X'`, then the $i^\textrm{th}$
+ * bit of `state` is set.  If instead the $i^\textrm{th}$ cell is marked with
+ * an `'O'`, then the $(9+i)^\textrm{th}$ bit of `state` is set.  If the
+ * $i^\textrm{th}$ cell is not yet marked, then both the $i^\textrm{th}$ bit
+ * and the $(9+i)^\textrm{th}$ are $0$.
+ * */
+CustomArray empty(int state) {
     int *xArr{new int[9]{}};
     int resultArrSize;
     const int MAX_SUM = 9;
@@ -55,7 +63,7 @@ EmptyArray empty(int state) {
         }
     }
     resultArrSize = MAX_SUM - calcArrSize(xArr, oArr);
-    std::cout << "free cells count: " << resultArrSize << std::endl;
+//    std::cout << "free cells count: " << resultArrSize << std::endl;
     static int *resultArr{new int[resultArrSize]{}};
     int resultIndex = 0;
     for (int i = 0; i < 9; i++) {
@@ -64,8 +72,8 @@ EmptyArray empty(int state) {
             resultArr[resultIndex++] = i;
         }
     }
-    printArray(resultArr, resultArrSize);
-    return EmptyArray(resultArr, resultArrSize);
+//    printArray(resultArr, resultArrSize);
+    return CustomArray(resultArr, resultArrSize);
 }
 
 int calcArrSize(const int *xArr, const int *oArr) {
@@ -75,7 +83,7 @@ int calcArrSize(const int *xArr, const int *oArr) {
             result++;
         }
     }
-    std::cout << "result Arr size: " << result << std::endl;
+//    std::cout << "result Arr size: " << result << std::endl;
     return result;
 }
 
@@ -87,14 +95,33 @@ void printArray(const int *arr, size_t size) {
             std::cout << ", ";
         }
     }
-    std::cout << " ]";
+    std::cout << " ]\n";
 }
 
+/*
+ * Given a `state` and the `player` who is next to move, the function
+ * `next_states(state, player)` computes the set of states that can be
+ * reached from `state`. Note that player `X` is encoded as the number
+ * $0$, while player `O` is encoded as the number $1$.
+ * */
+CustomArray next_states(int state, int player) {
+    CustomArray emptyCells = empty(state);
+    static int *resultArr{new int[emptyCells.size]{}};
+    for (int i = 0; i < emptyCells.size; i++) {
+        int next_state = state | set_bit(player * 9 + emptyCells.arr[i]);
+        resultArr[i] = next_state;
+    }
+    return CustomArray(resultArr, emptyCells.size);
+}
+
+
 int main() {
-    int state = set_bits(new int[6]{2, 3, 5, 9 + 1, 9 + 4, 9 + 8}, 6);
-    std::cout << to_board(state) << std::endl;
-    EmptyArray emptyArray = empty(state);
-    printArray(emptyArray.arr, emptyArray.size);
+    int state = set_bits(new int[6]{2, 3, 5, 9 + 1, 9 + 4, 9 + 6}, 6);
+    std::cout << "state:\n" << to_board(state) << "\nnext states:\n";
+    CustomArray nextStates = next_states(state, 0);
+    for (int i = 0; i < nextStates.size; i++) {
+        std::cout << to_board(nextStates.arr[i]) << std::endl;
+    }
 
     return 0;
 }
