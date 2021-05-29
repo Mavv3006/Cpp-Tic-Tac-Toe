@@ -152,11 +152,15 @@ int utility(int state, int player) {
     return 0; // it's a draw
 }
 
+bool finished(int state) {
+    return utility(state, 0) != 2;
+}
+
 
 int main() {
     int s1 = set_bits(new int[]{0, 2, 3, 6, 9 + 1, 9 + 4, 9 + 5}, 7);
     std::cout << to_board(s1) << std::endl;
-    std::cout << utility(s1, 0);
+    std::cout << std::boolalpha << finished(s1);
 
     return 0;
 }
