@@ -10,6 +10,8 @@
 
 class TicTacToe {
 public:
+    static const int Start = 0;
+
     static int utility(int state, int player);
 
     static bool finished(int state);

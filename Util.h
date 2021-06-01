@@ -6,6 +6,8 @@
 #define TIC_TAC_TOE_UTIL_H
 
 
+#include "CustomArray.h"
+
 class Util {
 public:
     constexpr static const int Players[2] = {0, 1};
@@ -22,7 +24,7 @@ public:
         return 1 << power;
     }
 
-    static std::string to_board(int state) {
+    static void to_board(int state) {
         std::string result = "+-+-+-+\n";
         for (int cell = 0; cell < 9; cell++) {
             if ((state & set_bit(cell)) != 0) {
@@ -36,7 +38,7 @@ public:
                 result += "|\n+-+-+-+\n";
             }
         }
-        return result;
+        std::cout << result;
     }
 
     static int *all_lines() {
@@ -50,6 +52,28 @@ public:
                 set_bits(new int[3]{0, 4, 8}, 3), // falling diagonal
                 set_bits(new int[3]{2, 4, 6}, 3), // rising diagonal
         };
+    }
+
+    static void print_array(const int *arr, const size_t size) {
+        std::cout << "[ ";
+        for (int i = 0; i < size; i++) {
+            std::cout << arr[i];
+            if (size - i > 1) {
+                std::cout << ", ";
+            }
+        }
+        std::cout << " ]\n";
+    }
+
+    static void print_array(CustomArray array) {
+        std::cout << "[ ";
+        for (int i = 0; i < array.size; i++) {
+            std::cout << array.arr[i];
+            if (array.size - i > 1) {
+                std::cout << ", ";
+            }
+        }
+        std::cout << " ]\n";
     }
 };
 

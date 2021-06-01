@@ -6,7 +6,6 @@
 #include "TicTacToe.h"
 #include "Minimax.h"
 
-
 /**
  * The function get_move asks the user to input a move
  * in the format r,c where r is the row and the
@@ -44,7 +43,31 @@ int get_move(int state) {
     }
 }
 
+void play_game() {
+    int state = TicTacToe::Start;
+    while (true) {
+        int firstPlayer = Util::Players[0];
+        BestMove bestMove = Minimax::best_move(state, firstPlayer);
+        state = bestMove.state;
+        Util::to_board(state);
+        return;
+//        std::cout << "for me, the game has the value " << bestMove.val << ".\n";
+//        if (TicTacToe::finished(state)) {
+//            TicTacToe::final_msg(state);
+//            return;
+//        }
+//        std::cout << "\n\n";
+//        state = get_move(state);
+//        Util::to_board(state);
+//        if (TicTacToe::finished(state)) {
+//            TicTacToe::final_msg(state);
+//            return;
+//        }
+    }
+}
+
 int main() {
+    play_game();
 
     return 0;
 }

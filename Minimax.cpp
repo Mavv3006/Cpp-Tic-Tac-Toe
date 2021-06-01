@@ -6,6 +6,7 @@
 
 BestMove Minimax::best_move(int state, int player) {
     CustomArray nextStates = TicTacToe::next_states(state, player);
+    Util::print_array(nextStates);
     int bestValue = value(state, player);
     int bestMovesSize = 0;
     int *bestMoves{new int[bestMovesSize]{}};
@@ -14,7 +15,10 @@ BestMove Minimax::best_move(int state, int player) {
             bestMoves[bestMovesSize++] = nextStates.arr[i];
         }
     }
-    return BestMove(bestValue, bestMoves[random(0, bestMovesSize)]);
+    Util::print_array(bestMoves, bestMovesSize);
+    int returnMove = bestMoves[random(0, bestMovesSize)];
+    const BestMove bestMove = BestMove(bestValue, returnMove);
+    return bestMove;
 }
 
 int Minimax::value(int state, int player) {
@@ -23,7 +27,7 @@ int Minimax::value(int state, int player) {
     }
     int o = other(player);
     CustomArray nextStates = TicTacToe::next_states(state, player);
-    int maxValue;
+    int maxValue = -2; // TODO: tidy up
     for (int i = 0; i < nextStates.size; i++) {
         int val = -value(nextStates.arr[i], o);
         if (val > maxValue) maxValue = val;
