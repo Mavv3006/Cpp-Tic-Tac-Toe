@@ -2,9 +2,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Util.h"
-#include "TicTacToe.h"
-#include "Minimax.h"
+#include "lib/Util.h"
+#include "lib/TicTacToe.h"
+#include "lib/Minimax.h"
 
 /**
  * The function get_move asks the user to input a move
