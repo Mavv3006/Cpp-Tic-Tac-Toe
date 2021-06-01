@@ -3,4 +3,4 @@ project(tic_tac_toe)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(tic_tac_toe main.cpp CustomArray.h TicTacToe.cpp TicTacToe.h Util.h)
+add_executable(tic_tac_toe main.cpp CustomArray.h TicTacToe.cpp TicTacToe.h Util.h Minimax.cpp Minimax.h)
