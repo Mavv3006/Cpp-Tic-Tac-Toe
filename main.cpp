@@ -44,7 +44,7 @@ int get_move(int state) {
 }
 
 void play_game() {
-    int state = TicTacToe::Start;
+    int state = TicTacToe::start;
     while (true) {
         int firstPlayer = Util::Players[0];
         BestMove bestMove = Minimax::best_move(state, firstPlayer);

@@ -62,7 +62,7 @@ int TicTacToe::utility(int state, int player) {
             return -1 + 2 * player; // player 'O' has won
         }
     }
-    if ((state & 511) | ((state >> 9) != 511)) {
+    if (((state & 511) | (state >> 9)) != 511) {
         return 2; // the board is not yet filled
     }
     return 0; // it's a draw
@@ -76,11 +76,11 @@ bool TicTacToe::finished(int state) {
 bool TicTacToe::final_msg(int state) {
     if (finished(state)) {
         if (utility(state, 1) == 1) {
-            std::cout << "You have won!";
+            std::cout << "You have won!\n";
         } else if (utility(state, 1) == -1) {
-            std::cout << "You have lost!";
+            std::cout << "You have lost!\n";
         } else {
-            std::cout << "It's a draw!";
+            std::cout << "It's a draw!\n";
         }
         return true;
     }

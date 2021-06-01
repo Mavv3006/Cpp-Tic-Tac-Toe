@@ -12,6 +12,12 @@ class Util {
 public:
     constexpr static const int Players[2] = {0, 1};
 
+    /**
+     *
+     * @param bits an array with a list of numbers that specify bit positions in an integer
+     * @param size the size of the array, i.e. the number of positions in the integer to set
+     * @return an integer such that the bits specified in bits are set. Counting starts with 0.
+     */
     static int set_bits(const int *bits, const size_t size) {
         int result = 0;
         for (int i = 0; i < size; i++) {
@@ -20,10 +26,20 @@ public:
         return result;
     }
 
+    /**
+     * @param power the bit to set
+     * @return a number that has exactly the n-th bit set.
+     */
     static int set_bit(int power) {
         return 1 << power;
     }
 
+    /**
+     * The function converts the current state of the game into a string that represents the
+     * board corresponding to the state.
+     *
+     * @param state the current state of the game
+     */
     static void to_board(int state) {
         std::string result = "+-+-+-+\n";
         for (int cell = 0; cell < 9; cell++) {
@@ -41,6 +57,10 @@ public:
         std::cout << result;
     }
 
+    /**
+     * @return a list of eight bit masks. These masks can be used to test whether there are
+     * three identical masks in a row, column or diagonal.
+     */
     static int *all_lines() {
         return new int[]{
                 set_bits(new int[3]{0, 1, 2}, 3), // 1st row
