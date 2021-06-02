@@ -17,7 +17,7 @@ int get_move(int state) {
     std::string input;
     std::vector<std::string> result;
     while (true) {
-        std::cout << "move: ";
+        std::cout << "enter your move (row, column): ";
         std::cin >> input;
         std::stringstream ss(input);
         while (ss.good()) {
@@ -45,6 +45,7 @@ int get_move(int state) {
 
 void play_game() {
     int state = TicTacToe::start;
+    std::cout << "Hint: we don't check whether the cell is marked yet or not" << std::endl;
     while (true) {
         int firstPlayer = Util::Players[0];
         BestMove bestMove = Minimax::best_move(state, firstPlayer);
@@ -55,7 +56,7 @@ void play_game() {
             TicTacToe::final_msg(state);
             return;
         }
-        std::cout << "\n\n";
+        std::cout << "\n";
         state = get_move(state);
         Util::to_board(state);
         if (TicTacToe::finished(state)) {
