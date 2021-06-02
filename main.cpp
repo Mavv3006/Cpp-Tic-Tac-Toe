@@ -2,9 +2,9 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Util.h"
-#include "TicTacToe.h"
-#include "Minimax.h"
+#include "lib/Util.h"
+#include "lib/TicTacToe.h"
+#include "lib/Minimax.h"
 
 /**
  * The function get_move asks the user to input a move
@@ -44,25 +44,24 @@ int get_move(int state) {
 }
 
 void play_game() {
-    int state = TicTacToe::Start;
+    int state = TicTacToe::start;
     while (true) {
         int firstPlayer = Util::Players[0];
         BestMove bestMove = Minimax::best_move(state, firstPlayer);
         state = bestMove.state;
         Util::to_board(state);
-        return;
-//        std::cout << "for me, the game has the value " << bestMove.val << ".\n";
-//        if (TicTacToe::finished(state)) {
-//            TicTacToe::final_msg(state);
-//            return;
-//        }
-//        std::cout << "\n\n";
-//        state = get_move(state);
-//        Util::to_board(state);
-//        if (TicTacToe::finished(state)) {
-//            TicTacToe::final_msg(state);
-//            return;
-//        }
+        std::cout << "for me, the game has the value " << bestMove.val << ".\n";
+        if (TicTacToe::finished(state)) {
+            TicTacToe::final_msg(state);
+            return;
+        }
+        std::cout << "\n\n";
+        state = get_move(state);
+        Util::to_board(state);
+        if (TicTacToe::finished(state)) {
+            TicTacToe::final_msg(state);
+            return;
+        }
     }
 }
 
