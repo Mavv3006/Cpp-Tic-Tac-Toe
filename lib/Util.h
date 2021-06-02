@@ -5,6 +5,8 @@
 #ifndef TIC_TAC_TOE_UTIL_H
 #define TIC_TAC_TOE_UTIL_H
 
+#include <iostream>
+#include "vector"
 
 class Util {
 public:
