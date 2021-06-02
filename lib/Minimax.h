@@ -18,9 +18,10 @@ struct BestMove {
 
 class Minimax {
 private:
-    static int random(int lowerBound, int upperBound);
+    static int random(unsigned int upperBound);
 
 public:
+    static std::vector<int> calc_best_moves(int bestValue, int state, int player);
 
 /**
  * Given a player p, the function other(p) computes the opponent of p. This assumes

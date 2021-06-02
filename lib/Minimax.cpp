@@ -3,24 +3,26 @@
 //
 
 #include "Minimax.h"
+#include "memoize.h"
 
 BestMove Minimax::best_move(int state, int player) {
     int bestValue = value(state, player);
+    std::vector<int> bestMoves = calc_best_moves(bestValue, state, player);
+    int returnMove = bestMoves[random(bestMoves.size())];
+    return BestMove(bestValue, returnMove);
+}
+
+std::vector<int> Minimax::calc_best_moves(int bestValue, int state, int player) {
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
-    Util::printf_array(nextStates);
-    int bestMovesSize = 0;
-    int *bestMoves{new int[nextStates.size()]{}};
+    std::vector<int> bestMoves;
+    bestMoves.reserve(nextStates.size());
     for (int nextState : nextStates) {
-        int nextValue = -value(nextState, other(player));
+        int nextValue = -value(nextState, Minimax::other(player));
         if (nextValue == bestValue) {
-            bestMoves[bestMovesSize] = nextState;
-            bestMovesSize++;
+            bestMoves.push_back(nextState);
         }
     }
-    Util::printf_array(bestMoves, bestMovesSize);
-    int returnMove = bestMoves[random(0, bestMovesSize)];
-    const BestMove bestMove = BestMove(bestValue, returnMove);
-    return bestMove;
+    return bestMoves;
 }
 
 int Minimax::value(int state, int player) {
@@ -31,7 +33,8 @@ int Minimax::value(int state, int player) {
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
     int maxValue = -2; // TODO: tidy up
     for (int nextState : nextStates) {
-        int val = -value(nextState, o);
+        int val = -STATIC_MEMOIZER(value)(nextState, o);
+        if (val == 1) return 1;
         if (val > maxValue) maxValue = val;
     }
     return maxValue;
@@ -44,10 +47,10 @@ int Minimax::other(int p) {
     return Util::Players[0];
 }
 
-int Minimax::random(int lowerBound, int upperBound) {
+int Minimax::random(unsigned int upperBound) {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution distribution(lowerBound, upperBound);
+    std::uniform_int_distribution distribution(0, (int) upperBound);
     return distribution(gen);
 }
 
