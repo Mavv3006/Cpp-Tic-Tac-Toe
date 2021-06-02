@@ -4,6 +4,7 @@
 
 #include "TicTacToe.h"
 #include "Util.h"
+#include "vector"
 
 int TicTacToe::calcArrSize(const int *xArr, const int *oArr) {
     int result = 0;
@@ -15,11 +16,8 @@ int TicTacToe::calcArrSize(const int *xArr, const int *oArr) {
     return result;
 }
 
-CustomArray TicTacToe::empty(int state) {
-    int *xArr{new int[9]{}};
-    int resultArrSize;
-    const int MAX_SUM = 9;
-    int *oArr{new int[9]{}};
+std::vector<int> TicTacToe::empty(int state) {
+    int *xArr{new int[9]{}}, *oArr{new int[9]{}};
     for (int i = 0; i < 9; i++) {
         if ((state & (1 << i)) != 0) {
             // i-th bit is set with X
@@ -30,26 +28,26 @@ CustomArray TicTacToe::empty(int state) {
             oArr[i] = 1;
         }
     }
-    resultArrSize = MAX_SUM - calcArrSize(xArr, oArr);
-    static int *resultArr{new int[resultArrSize]{}};
-    int resultIndex = 0;
+    std::vector<int> resultVector;
+    resultVector.reserve(9 - calcArrSize(xArr, oArr));
     for (int i = 0; i < 9; i++) {
         if (xArr[i] == 0 && oArr[i] == 0) {
             // cell is empty
-            resultArr[resultIndex++] = i;
+            resultVector.push_back(i);
         }
     }
-    return CustomArray(resultArr, resultArrSize);
+    return resultVector;
 }
 
-CustomArray TicTacToe::next_states(int state, int player) {
-    CustomArray emptyCells = empty(state);
-    static int *resultArr{new int[emptyCells.getSize()]{}};
-    for (int i = 0; i < emptyCells.getSize(); i++) {
-        int next_state = state | Util::set_bit(player * 9 + emptyCells.getAt(i));
-        resultArr[i] = next_state;
+std::vector<int> TicTacToe::next_states(int state, int player) {
+    std::vector<int> emptyCells = empty(state);
+    std::vector<int> resultVector;
+    resultVector.reserve(emptyCells.size());
+    for (int emptyCell : emptyCells) {
+        int next_state = state | Util::set_bit(player * 9 + emptyCell);
+        resultVector.push_back(next_state);
     }
-    return CustomArray(resultArr, emptyCells.getSize());
+    return resultVector;
 }
 
 int TicTacToe::utility(int state, int player) {

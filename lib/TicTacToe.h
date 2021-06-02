@@ -6,7 +6,7 @@
 #define TIC_TAC_TOE_TICTACTOE_H
 
 
-#include "CustomArray.h"
+#include <vector>
 
 class TicTacToe {
 public:
@@ -39,10 +39,10 @@ public:
      * @param player the player who is next to move
      * @return an array of states that can be reached from state
      */
-    static CustomArray next_states(int state, int player);
+    static std::vector<int> next_states(int state, int player);
 
     /**
-     * Given a state that is represented as a number, the function empty(state) returns the
+     * Given a state that is represented as a number, the function empty(state) returns
      * an array of indexes of those cells such that neither player X nor O has placed a mark
      * in the cell. Note that there are 9 cells on the board. Each of these cells can hold
      * either an 'X' or an 'O'. If the i-th cell is marked with an 'X', then the i-th bit of
@@ -53,7 +53,7 @@ public:
      * @param state the current state of the game
      * @return the indexes of the cells which are not yet marked
      */
-    static CustomArray empty(int state);
+    static std::vector<int> empty(int state);
 
     /**
      * the function informs the user about the result of the game once the game is finished.

@@ -50,19 +50,18 @@ void play_game() {
         BestMove bestMove = Minimax::best_move(state, firstPlayer);
         state = bestMove.state;
         Util::to_board(state);
-        return;
-//        std::cout << "for me, the game has the value " << bestMove.val << ".\n";
-//        if (TicTacToe::finished(state)) {
-//            TicTacToe::final_msg(state);
-//            return;
-//        }
-//        std::cout << "\n\n";
-//        state = get_move(state);
-//        Util::to_board(state);
-//        if (TicTacToe::finished(state)) {
-//            TicTacToe::final_msg(state);
-//            return;
-//        }
+        std::cout << "for me, the game has the value " << bestMove.val << ".\n";
+        if (TicTacToe::finished(state)) {
+            TicTacToe::final_msg(state);
+            return;
+        }
+        std::cout << "\n\n";
+        state = get_move(state);
+        Util::to_board(state);
+        if (TicTacToe::finished(state)) {
+            TicTacToe::final_msg(state);
+            return;
+        }
     }
 }
 

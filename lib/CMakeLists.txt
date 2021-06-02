@@ -1,6 +1,6 @@
 project(lib)
 
-set(HEADER_FILES CustomArray.h Minimax.h Util.h TicTacToe.h)
+set(HEADER_FILES Minimax.h Util.h TicTacToe.h)
 
 set(SOURCE_FILES Minimax.cpp TicTacToe.cpp)
 

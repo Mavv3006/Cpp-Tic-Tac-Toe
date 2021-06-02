@@ -6,8 +6,6 @@
 #define TIC_TAC_TOE_UTIL_H
 
 
-#include "CustomArray.h"
-
 class Util {
 public:
     constexpr static const int Players[2] = {0, 1};
@@ -85,22 +83,22 @@ public:
         std::cout << " ]\n";
     }
 
-    static void print_array(CustomArray array) {
+    static void print_array(std::vector<int> array) {
         std::cout << "[ ";
-        for (int i = 0; i < array.getSize(); i++) {
-            std::cout << array.getAt(i);
-            if (array.getSize() - i > 1) {
+        for (int i = 0; i < array.size(); i++) {
+            std::cout << array.at(i);
+            if (array.size() - i > 1) {
                 std::cout << ", ";
             }
         }
         std::cout << " ]\n";
     }
 
-    static void printf_array(CustomArray array) {
+    static void printf_array(std::vector<int> array) {
         printf("[ ");
-        for (int i = 0; i < array.getSize(); i++) {
-            printf("%d", array.getAt(i));
-            if (array.getSize() - i > 1) {
+        for (int i = 0; i < array.size(); i++) {
+            printf("%d", array.at(i));
+            if (array.size() - i > 1) {
                 printf(", ");
             }
         }
