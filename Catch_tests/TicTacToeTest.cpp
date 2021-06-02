@@ -30,11 +30,11 @@ TEST_CASE("empty function") {
             arrayIndex++;
         }
 
-        CHECK(emptyCells.size == 8);
+        CHECK(emptyCells.getSize() == 8);
 
         // check content of emptyCells array
         for (int j = 0; j < 8; j++) {
-            CHECK(checking_state[j] == emptyCells.arr[j]);
+            CHECK(checking_state[j] == emptyCells.getAt(j));
         }
     }
 }
@@ -48,10 +48,10 @@ TEST_CASE("next_states function") {
 
     CustomArray emptyCells = TicTacToe::next_states(state, 0);
 
-    CHECK(emptyCells.size == 9);
+    CHECK(emptyCells.getSize() == 9);
     // check content of emptyCells array
     for (int j = 0; j < 8; j++) {
-        CHECK(checking_state[j] == emptyCells.arr[j]);
+        CHECK(checking_state[j] == emptyCells.getAt(j));
     }
 }
 
@@ -108,4 +108,20 @@ TEST_CASE("final_msg function") {
         state = 0;
         CHECK(TicTacToe::final_msg(state) == false);
     }
+}
+
+TEST_CASE("same memory address for next_states result") {
+    const int state = 0, player = 0;
+    CustomArray ns1 = TicTacToe::next_states(state, player);
+    for (int i = 0; i < ns1.getSize(); i++) {
+        printf_s("ns1[%d]=%d, ", i, ns1.getAt(i));
+    }
+    printf_s("\n\n\n");
+    CustomArray ns2 = TicTacToe::next_states(1, player);
+
+    for (int i = 0; i < ns1.getSize(); i++) {
+        printf_s("ns1[%d]=%d, ns2[%d]=%d\n", i, ns1.getAt(i), i, ns2.getAt(i));
+    }
+    fflush(stdout);
+    REQUIRE(ns1.getAt(0) != ns2.getAt(0));
 }

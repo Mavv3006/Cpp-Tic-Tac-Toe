@@ -44,12 +44,12 @@ CustomArray TicTacToe::empty(int state) {
 
 CustomArray TicTacToe::next_states(int state, int player) {
     CustomArray emptyCells = empty(state);
-    static int *resultArr{new int[emptyCells.size]{}};
-    for (int i = 0; i < emptyCells.size; i++) {
-        int next_state = state | Util::set_bit(player * 9 + emptyCells.arr[i]);
+    static int *resultArr{new int[emptyCells.getSize()]{}};
+    for (int i = 0; i < emptyCells.getSize(); i++) {
+        int next_state = state | Util::set_bit(player * 9 + emptyCells.getAt(i));
         resultArr[i] = next_state;
     }
-    return CustomArray(resultArr, emptyCells.size);
+    return CustomArray(resultArr, emptyCells.getSize());
 }
 
 int TicTacToe::utility(int state, int player) {

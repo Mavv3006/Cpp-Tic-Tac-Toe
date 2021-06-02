@@ -5,17 +5,20 @@
 #include "Minimax.h"
 
 BestMove Minimax::best_move(int state, int player) {
-    CustomArray nextStates = TicTacToe::next_states(state, player);
-    Util::print_array(nextStates);
     int bestValue = value(state, player);
+    CustomArray nextStates = TicTacToe::next_states(state, player);
+    Util::printf_array(nextStates);
     int bestMovesSize = 0;
-    int *bestMoves{new int[bestMovesSize]{}};
-    for (int i = 0; i < nextStates.size; i++) {
-        if (-value(nextStates.arr[i], other(player)) == bestValue) {
-            bestMoves[bestMovesSize++] = nextStates.arr[i];
+    int *bestMoves{new int[nextStates.getSize()]{}};
+    for (int i = 0; i < nextStates.getSize(); i++) {
+        int nextState = nextStates.getAt(i);
+        int nextValue = -value(nextState, other(player));
+        if (nextValue == bestValue) {
+            bestMoves[bestMovesSize] = nextState;
+            bestMovesSize++;
         }
     }
-    Util::print_array(bestMoves, bestMovesSize);
+    Util::printf_array(bestMoves, bestMovesSize);
     int returnMove = bestMoves[random(0, bestMovesSize)];
     const BestMove bestMove = BestMove(bestValue, returnMove);
     return bestMove;
@@ -28,8 +31,8 @@ int Minimax::value(int state, int player) {
     int o = other(player);
     CustomArray nextStates = TicTacToe::next_states(state, player);
     int maxValue = -2; // TODO: tidy up
-    for (int i = 0; i < nextStates.size; i++) {
-        int val = -value(nextStates.arr[i], o);
+    for (int i = 0; i < nextStates.getSize(); i++) {
+        int val = -value(nextStates.getAt(i), o);
         if (val > maxValue) maxValue = val;
     }
     return maxValue;

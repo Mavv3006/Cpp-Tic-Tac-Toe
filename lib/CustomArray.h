@@ -8,13 +8,21 @@
 #include <iostream>
 
 class CustomArray {
-public:
-    size_t size;
+private:
     int *arr;
+    size_t size;
+public:
+    [[nodiscard]] size_t getSize() const {
+        return size;
+    }
 
     CustomArray(int *arr, size_t size) {
         this->size = size;
         this->arr = arr;
+    }
+
+    [[nodiscard]] int getAt(int index) const {
+        return arr[index];
     }
 };
 

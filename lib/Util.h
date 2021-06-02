@@ -87,13 +87,37 @@ public:
 
     static void print_array(CustomArray array) {
         std::cout << "[ ";
-        for (int i = 0; i < array.size; i++) {
-            std::cout << array.arr[i];
-            if (array.size - i > 1) {
+        for (int i = 0; i < array.getSize(); i++) {
+            std::cout << array.getAt(i);
+            if (array.getSize() - i > 1) {
                 std::cout << ", ";
             }
         }
         std::cout << " ]\n";
+    }
+
+    static void printf_array(CustomArray array) {
+        printf("[ ");
+        for (int i = 0; i < array.getSize(); i++) {
+            printf("%d", array.getAt(i));
+            if (array.getSize() - i > 1) {
+                printf(", ");
+            }
+        }
+        printf(" ]\n");
+        fflush(stdout);
+    }
+
+    static void printf_array(const int *arr, const size_t size) {
+        printf("[ ");
+        for (int i = 0; i < size; i++) {
+            printf("%d", arr[i]);
+            if (size - i > 1) {
+                printf(", ");
+            }
+        }
+        printf(" ]\n");
+        fflush(stdout);
     }
 };
 
