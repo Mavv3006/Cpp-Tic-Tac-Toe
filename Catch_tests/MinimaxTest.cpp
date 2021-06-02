@@ -103,3 +103,25 @@ TEST_CASE("calc_best_moves function: state 33, player 1", "[Minimax Test]") {
     CHECK(bestMove.at(5) == 65569);
     CHECK(bestMove.at(6) == 131105);
 }
+
+static void test_best_move_function(int state, int player) {
+    int value = Minimax::value(state, player);
+    std::vector<int> next_states = Minimax::calc_best_moves(value, state, player);
+
+    BestMove bestMove = Minimax::best_move(state, player);
+
+    auto iterator = std::find(next_states.begin(), next_states.end(), bestMove.state);
+    CHECK(iterator != next_states.end());
+    CHECK(bestMove.val == value);
+}
+
+TEST_CASE("best_move function", "[Minimax Test]")
+{
+    SECTION("state: 0, player: 0") {
+        test_best_move_function(0, 0);
+    }SECTION("state: 33, player: 1") {
+        test_best_move_function(33, 1);
+    }SECTION("state: 1600, player: 0") {
+        test_best_move_function(1600, 0);
+    }
+}

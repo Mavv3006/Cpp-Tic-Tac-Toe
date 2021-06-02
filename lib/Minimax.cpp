@@ -8,7 +8,7 @@
 BestMove Minimax::best_move(int state, int player) {
     int bestValue = value(state, player);
     std::vector<int> bestMoves = calc_best_moves(bestValue, state, player);
-    int returnMove = bestMoves[random(bestMoves.size())];
+    int returnMove = bestMoves[random(bestMoves.size() - 1)];
     return BestMove(bestValue, returnMove);
 }
 
