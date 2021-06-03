@@ -7,11 +7,10 @@
 #include <cmath>
 
 TEST_CASE("set_bits function") {
-    int size = 3;
-    int bits[] = {0, 1, 4};
+    std::array<int, 3> bits{0, 1, 4};
     double expected_result = (1 << 0) + (1 << 1) + (1 << 4);
 
-    int result = Util::set_bits(bits, size);
+    int result = Util::set_bits(bits);
 
     CHECK(expected_result == result);
 }

@@ -64,8 +64,7 @@ public:
      */
     static bool final_msg(int state);
 
-private:
-    static int calcArrSize(const int *xArr, const int *oArr);
+    static int markedCellsCount(int state);
 };
 
 

@@ -6,33 +6,21 @@
 #include "Util.h"
 #include "vector"
 
-int TicTacToe::calcArrSize(const int *xArr, const int *oArr) {
-    int result = 0;
-    for (int i = 0; i < 9; i++) {
-        if (xArr[i] == 1 || oArr[i] == 1) {
-            result++;
+int TicTacToe::markedCellsCount(int state) {
+    int markedCells = 0;
+    for (int i = 0; i < 18; i++) {
+        if (state & (1 << i)) {
+            markedCells++;
         }
     }
-    return result;
+    return markedCells;
 }
 
 std::vector<int> TicTacToe::empty(int state) {
-    int *xArr{new int[9]{}}, *oArr{new int[9]{}};
-    for (int i = 0; i < 9; i++) {
-        if ((state & (1 << i)) != 0) {
-            // i-th bit is set with X
-            xArr[i] = 1;
-        }
-        if ((state & (1 << (9 + i))) != 0) {
-            // (9+i)-th bit is set with O
-            oArr[i] = 1;
-        }
-    }
     std::vector<int> resultVector;
-    resultVector.reserve(9 - calcArrSize(xArr, oArr));
+    resultVector.reserve(9 - markedCellsCount(state));
     for (int i = 0; i < 9; i++) {
-        if (xArr[i] == 0 && oArr[i] == 0) {
-            // cell is empty
+        if (((state & (1 << i)) == 0) && ((state & (1 << (9 + i))) == 0)) {
             resultVector.push_back(i);
         }
     }

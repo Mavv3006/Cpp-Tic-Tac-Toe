@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "vector"
+#include "array"
 
 class Util {
 public:
@@ -18,7 +19,8 @@ public:
      * @param size the size of the array, i.e. the number of positions in the integer to set
      * @return an integer such that the bits specified in bits are set. Counting starts with 0.
      */
-    static int set_bits(const int *bits, const size_t size) {
+    template<unsigned int size>
+    static int set_bits(const std::array<int, size> &bits) {
         int result = 0;
         for (int i = 0; i < size; i++) {
             result |= 1 << bits[i];
@@ -61,16 +63,16 @@ public:
      * @return a list of eight bit masks. These masks can be used to test whether there are
      * three identical masks in a row, column or diagonal.
      */
-    static int *all_lines() {
-        return new int[]{
-                set_bits(new int[3]{0, 1, 2}, 3), // 1st row
-                set_bits(new int[3]{3, 4, 5}, 3), // 2nd row
-                set_bits(new int[3]{6, 7, 8}, 3), // 3rd row
-                set_bits(new int[3]{0, 3, 6}, 3), // 1st column
-                set_bits(new int[3]{1, 4, 7}, 3), // 2nd column
-                set_bits(new int[3]{2, 5, 8}, 3), // 3rd column
-                set_bits(new int[3]{0, 4, 8}, 3), // falling diagonal
-                set_bits(new int[3]{2, 4, 6}, 3), // rising diagonal
+    static std::array<int, 8> all_lines() {
+        return std::array<int, 8>{
+                set_bits(std::array<int, 3>{0, 1, 2}), // 1st row
+                set_bits(std::array<int, 3>{3, 4, 5}), // 2nd row
+                set_bits(std::array<int, 3>{6, 7, 8}), // 3rd row
+                set_bits(std::array<int, 3>{0, 3, 6}), // 1st column
+                set_bits(std::array<int, 3>{1, 4, 7}), // 2nd column
+                set_bits(std::array<int, 3>{2, 5, 8}), // 3rd column
+                set_bits(std::array<int, 3>{0, 4, 8}), // falling diagonal
+                set_bits(std::array<int, 3>{2, 4, 6}), // rising diagonal
         };
     }
 

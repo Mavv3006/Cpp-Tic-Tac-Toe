@@ -4,29 +4,22 @@
 
 #include "catch.hpp"
 #include "Minimax.h"
+#include "states.h"
 
 TEST_CASE("value function", "[Minimax Test]") {
-    int state, value;
+    int value;
     SECTION("player can force a win") {
-        state = Util::set_bits(new int[]{0, 1}, 2);
-
-        value = Minimax::value(state, 0);
+        value = Minimax::value(States::winningState(), 0);
 
         CHECK(value == 1);
     }SECTION("player can force a draw") {
-        const int *bits = new int[]{2, 5, 6, 7, 1 + 9, 3 + 9, 4 + 9, 8 + 9};
-        state = Util::set_bits(bits, 8);
-
-        value = Minimax::value(state, 0);
+        value = Minimax::value(States::drawingState(), 0);
 
         CHECK(value == 0);
     }SECTION("opponent of player can force a win") {
-        const int *bits = new int[]{0, 1, 4};
-        state = Util::set_bits(bits, 3);
+        value = Minimax::value(States::losingState(), 1);
 
-        value = Minimax::value(state, 1);
-
-        CHECK(value == -1);
+        CHECK(value == 1);
     }SECTION("state 0, player 0") {
         value = Minimax::value(0, 0);
         CHECK(value == 0);
