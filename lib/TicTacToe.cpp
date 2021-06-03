@@ -40,7 +40,7 @@ std::vector<int> TicTacToe::next_states(int state, int player) {
 
 int TicTacToe::utility(int state, int player) {
     for (int i = 0; i < 8; i++) {
-        int mask = Util::all_lines()[i];
+        int mask = Util::winning_states()[i];
         if ((state & mask) == mask) {
             return 1 - 2 * player; // player 'X' has won
         }

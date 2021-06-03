@@ -11,10 +11,9 @@
 
 class Util {
 public:
-    constexpr static const int Players[2] = {0, 1};
+    static constexpr int Players[2] = {0, 1};
 
     /**
-     *
      * @param bits an array with a list of numbers that specify bit positions in an integer
      * @param size the size of the array, i.e. the number of positions in the integer to set
      * @return an integer such that the bits specified in bits are set. Counting starts with 0.
@@ -63,7 +62,7 @@ public:
      * @return a list of eight bit masks. These masks can be used to test whether there are
      * three identical masks in a row, column or diagonal.
      */
-    static std::array<int, 8> all_lines() {
+    static std::array<int, 8> winning_states() {
         return std::array<int, 8>{
                 set_bits(std::array<int, 3>{0, 1, 2}), // 1st row
                 set_bits(std::array<int, 3>{3, 4, 5}), // 2nd row
@@ -74,17 +73,6 @@ public:
                 set_bits(std::array<int, 3>{0, 4, 8}), // falling diagonal
                 set_bits(std::array<int, 3>{2, 4, 6}), // rising diagonal
         };
-    }
-
-    static void print_array(const int *arr, const size_t size) {
-        std::cout << "[ ";
-        for (int i = 0; i < size; i++) {
-            std::cout << arr[i];
-            if (size - i > 1) {
-                std::cout << ", ";
-            }
-        }
-        std::cout << " ]\n";
     }
 
     static void print_array(std::vector<int> array) {
@@ -103,18 +91,6 @@ public:
         for (int i = 0; i < array.size(); i++) {
             printf("%d", array.at(i));
             if (array.size() - i > 1) {
-                printf(", ");
-            }
-        }
-        printf(" ]\n");
-        fflush(stdout);
-    }
-
-    static void printf_array(const int *arr, const size_t size) {
-        printf("[ ");
-        for (int i = 0; i < size; i++) {
-            printf("%d", arr[i]);
-            if (size - i > 1) {
                 printf(", ");
             }
         }
