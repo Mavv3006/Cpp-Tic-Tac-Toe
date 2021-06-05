@@ -1,10 +1,25 @@
+#include "lib/Util.h"
+#include "lib/Minimax.h"
+
+#define BENCHMARKING 1
+#if BENCHMARKING
+
+#include <Timer.h>
+
+void benchmark() {
+    const int starting_state = 0, starting_player = 0;
+    {
+        Timer timer;
+        Minimax::value(starting_state, starting_player);
+    }
+}
+
+#else
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
-#include "lib/Util.h"
 #include "lib/TicTacToe.h"
-#include "lib/Minimax.h"
 
 /**
  * The function get_move asks the user to input a move
@@ -65,9 +80,14 @@ void play_game() {
         }
     }
 }
+#endif
 
 int main() {
+#if BENCHMARKING
+    benchmark();
+#else
     play_game();
+#endif
 
     return 0;
 }
