@@ -18,7 +18,7 @@ public:
      * @param size the size of the array, i.e. the number of positions in the integer to set
      * @return an integer such that the bits specified in bits are set. Counting starts with 0.
      */
-    template<unsigned int size>
+    template<long unsigned int size>
     static int set_bits(const std::array<int, size> &bits) {
         int result = 0;
         for (int i = 0; i < size; i++) {
