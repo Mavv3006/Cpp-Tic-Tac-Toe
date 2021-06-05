@@ -7,6 +7,7 @@
 
 #include <map>
 #include "functional"
+#include <memory>
 
 enum class Cache : unsigned int {
     NO_RECLAIM, RECLAIM
