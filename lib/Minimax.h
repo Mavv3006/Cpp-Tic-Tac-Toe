@@ -24,9 +24,9 @@ public:
     static std::vector<int> calc_best_moves(int bestValue, int state, int player);
 
 /**
- * Given a player p, the function other(p) computes the opponent of p. This assumes
- * that there are only two players and the set of all players is stored in the global
- * variable Players.
+ * Given a player p, the function other(p) computes the opponent of p.
+ * The player is encoded as a two-bit integer.
+ *
  * @param p is a player
  * @return the other player
  */

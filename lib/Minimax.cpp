@@ -31,7 +31,7 @@ int Minimax::value(int state, int player) {
     }
     int o = other(player);
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
-    int maxValue = -2; // TODO: tidy up
+    int maxValue = -2;
     for (int nextState : nextStates) {
         int val = -STATIC_MEMOIZER(value)(nextState, o);
         if (val == 1) return 1;
@@ -41,10 +41,7 @@ int Minimax::value(int state, int player) {
 }
 
 int Minimax::other(int p) {
-    if (Util::Players[0] == p) {
-        return Util::Players[1];
-    }
-    return Util::Players[0];
+    return p ^ 0b11;
 }
 
 int Minimax::random(unsigned int upperBound) {

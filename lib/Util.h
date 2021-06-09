@@ -11,8 +11,6 @@
 
 class Util {
 public:
-    static constexpr int Players[2] = {0, 1};
-
     /**
      * @param bits an array with a list of numbers that specify bit positions in an integer
      * @param size the size of the array, i.e. the number of positions in the integer to set
