@@ -8,10 +8,12 @@
 
 void benchmark() {
     const int starting_state = 0, starting_player = 0;
+    int value;
     {
         Timer timer;
-        Minimax::value(starting_state, starting_player);
+        value = Minimax::value(starting_state, starting_player);
     }
+    std::cout << value;
 }
 
 #else

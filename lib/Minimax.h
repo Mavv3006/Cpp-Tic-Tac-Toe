@@ -24,15 +24,6 @@ public:
     static std::vector<int> calc_best_moves(int bestValue, int state, int player);
 
 /**
- * Given a player p, the function other(p) computes the opponent of p.
- * The player is encoded as a two-bit integer.
- *
- * @param p is a player
- * @return the other player
- */
-    static int other(int p);
-
-/**
  *
  * @param state the current state of the game
  * @param player a player of the game

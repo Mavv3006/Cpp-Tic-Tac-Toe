@@ -17,7 +17,7 @@ std::vector<int> Minimax::calc_best_moves(int bestValue, int state, int player) 
     std::vector<int> bestMoves;
     bestMoves.reserve(nextStates.size());
     for (int nextState : nextStates) {
-        int nextValue = -value(nextState, Minimax::other(player));
+        int nextValue = -value(nextState, player ^ 1);
         if (nextValue == bestValue) {
             bestMoves.push_back(nextState);
         }
@@ -29,7 +29,7 @@ int Minimax::value(int state, int player) {
     if (TicTacToe::finished(state)) {
         return TicTacToe::utility(state, player);
     }
-    int o = other(player);
+    int o = player ^ 1;
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
     int maxValue = -2;
     for (int nextState : nextStates) {
@@ -38,10 +38,6 @@ int Minimax::value(int state, int player) {
         if (val > maxValue) maxValue = val;
     }
     return maxValue;
-}
-
-int Minimax::other(int p) {
-    return p ^ 0b11;
 }
 
 int Minimax::random(unsigned int upperBound) {
