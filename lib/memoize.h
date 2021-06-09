@@ -2,8 +2,8 @@
 // Created by marvd on 01.06.2021.
 //
 
-#ifndef FIBONACCI_MEMOIZE_H
-#define FIBONACCI_MEMOIZE_H
+#ifndef TIC_TAC_TOE_MEMOIZE_H
+#define TIC_TAC_TOE_MEMOIZE_H
 
 #include <map>
 #include "functional"
@@ -46,4 +46,4 @@ struct static_memoizer<F_ret (*)(F_args...), func> {
 
 #define STATIC_MEMOIZER(func) static_memoizer<decltype(&func), &func>::get()
 
-#endif //FIBONACCI_MEMOIZE_H
+#endif //TIC_TAC_TOE_MEMOIZE_H

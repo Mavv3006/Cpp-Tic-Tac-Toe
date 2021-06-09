@@ -8,23 +8,10 @@
 #include <iostream>
 #include "vector"
 #include "array"
+#include "bitset"
 
 class Util {
 public:
-    /**
-     * @param bits an array with a list of numbers that specify bit positions in an integer
-     * @param size the size of the array, i.e. the number of positions in the integer to set
-     * @return an integer such that the bits specified in bits are set. Counting starts with 0.
-     */
-    template<long unsigned int size>
-    static int set_bits(const std::array<int, size> &bits) {
-        int result = 0;
-        for (int i = 0; i < size; i++) {
-            result |= 1 << bits[i];
-        }
-        return result;
-    }
-
     /**
      * @param power the bit to set
      * @return a number that has exactly the n-th bit set.
@@ -62,14 +49,8 @@ public:
      */
     static std::array<int, 8> winning_states() {
         return std::array<int, 8>{
-                set_bits(std::array<int, 3>{0, 1, 2}), // 1st row
-                set_bits(std::array<int, 3>{3, 4, 5}), // 2nd row
-                set_bits(std::array<int, 3>{6, 7, 8}), // 3rd row
-                set_bits(std::array<int, 3>{0, 3, 6}), // 1st column
-                set_bits(std::array<int, 3>{1, 4, 7}), // 2nd column
-                set_bits(std::array<int, 3>{2, 5, 8}), // 3rd column
-                set_bits(std::array<int, 3>{0, 4, 8}), // falling diagonal
-                set_bits(std::array<int, 3>{2, 4, 6}), // rising diagonal
+                0b111, 0b111000, 0b111000000, 0b1001001,
+                0b10010010, 0b100100100, 0b100010001, 0b1010100
         };
     }
 
@@ -84,16 +65,20 @@ public:
         std::cout << " ]\n";
     }
 
-    static void printf_array(std::vector<int> array) {
-        printf("[ ");
-        for (int i = 0; i < array.size(); i++) {
-            printf("%d", array.at(i));
-            if (array.size() - i > 1) {
-                printf(", ");
+    static void print_array(const int *arr, int size) {
+        int counter = 0;
+        std::cout << "[ ";
+        for (int i = 0; i < size; i++) {
+            int value = arr[i];
+            if (!value)continue;
+            counter++;
+            std::bitset<32> val = value;
+            std::cout << val;
+            if (size - i > 1) {
+                std::cout << ", ";
             }
         }
-        printf(" ]\n");
-        fflush(stdout);
+        std::cout << " ]\n\ncounter: " << counter << "\n";
     }
 };
 

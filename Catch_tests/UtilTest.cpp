@@ -6,15 +6,6 @@
 #include "Util.h"
 #include <cmath>
 
-TEST_CASE("set_bits function") {
-    std::array<int, 3> bits{0, 1, 4};
-    double expected_result = (1 << 0) + (1 << 1) + (1 << 4);
-
-    int result = Util::set_bits(bits);
-
-    CHECK(expected_result == result);
-}
-
 TEST_CASE("set_bit function") {
     int exponent = 4;
     SECTION("using pow function") {

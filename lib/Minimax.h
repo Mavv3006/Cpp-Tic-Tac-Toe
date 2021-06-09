@@ -9,6 +9,7 @@
 #include "TicTacToe.h"
 #include "Util.h"
 
+
 struct BestMove {
     int val;
     int state;
@@ -20,7 +21,9 @@ class Minimax {
 private:
     static int random(unsigned int upperBound);
 
+
 public:
+    static int arr[32768];
     static std::vector<int> calc_best_moves(int bestValue, int state, int player);
 
 /**

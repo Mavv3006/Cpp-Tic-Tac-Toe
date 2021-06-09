@@ -3,7 +3,6 @@
 //
 
 #include "Minimax.h"
-#include "memoize.h"
 
 BestMove Minimax::best_move(int state, int player) {
     int bestValue = value(state, player);
@@ -29,11 +28,22 @@ int Minimax::value(int state, int player) {
     if (TicTacToe::finished(state)) {
         return TicTacToe::utility(state, player);
     }
-    int o = player ^ 1;
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
     int maxValue = -2;
     for (int nextState : nextStates) {
-        int val = -STATIC_MEMOIZER(value)(nextState, o);
+        int val;
+        int idx = (nextState << 1) | player;
+//        std::cout << "index: " << idx << "\n";
+        int nextValue = (arr[idx >> 4] >> ((idx & 0b1111) << 1)) & 0b11;
+        if (!nextValue) {
+            // berechne neu
+            val = -value(nextState, player ^ 1);
+            val &= 0b11;
+            arr[idx >> 4] = arr[idx >> 4] | (val << ((idx & 0b1111) << 1));
+        } else {
+            // nehme Wert aus Array
+            val = arr[idx >> 4];
+        }
         if (val == 1) return 1;
         if (val > maxValue) maxValue = val;
     }
@@ -51,3 +61,5 @@ BestMove::BestMove(int val, int state) {
     this->state = state;
     this->val = val;
 }
+
+int Minimax::arr[32768] = {};

@@ -6,14 +6,9 @@
 
 #include <Timer.h>
 
-void benchmark() {
-    const int starting_state = 0, starting_player = 0;
-    int value;
-    {
-        Timer timer;
-        value = Minimax::value(starting_state, starting_player);
-    }
-    std::cout << value;
+int benchmark() {
+    Timer timer;
+    return Minimax::value(0, 0);
 }
 
 #else
@@ -86,7 +81,9 @@ void play_game() {
 
 int main() {
 #if BENCHMARKING
-    benchmark();
+    int returnValue = benchmark();
+    Util::print_array(Minimax::arr, 32768);
+    std::cout << returnValue;
 #else
     play_game();
 #endif
