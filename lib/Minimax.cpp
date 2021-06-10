@@ -31,7 +31,7 @@ int Minimax::value(int state, int player) {
     }
     int o = other(player);
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
-    int maxValue = -2; // TODO: tidy up
+    int maxValue = -2;
     for (int nextState : nextStates) {
         int val = -STATIC_MEMOIZER(value)(nextState, o);
         if (val == 1) return 1;
