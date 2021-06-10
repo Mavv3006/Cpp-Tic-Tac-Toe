@@ -58,7 +58,6 @@ bool TicTacToe::finished(int state) {
     return utility(state, 0) != 2;
 }
 
-
 bool TicTacToe::final_msg(int state) {
     if (finished(state)) {
         int u = utility(state, 1);
