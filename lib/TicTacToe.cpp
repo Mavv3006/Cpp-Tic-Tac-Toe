@@ -61,9 +61,10 @@ bool TicTacToe::finished(int state) {
 
 bool TicTacToe::final_msg(int state) {
     if (finished(state)) {
-        if (utility(state, 1) == 1) {
+        int u = utility(state, 1);
+        if (u == 1) {
             std::cout << "You have won!\n";
-        } else if (utility(state, 1) == -1) {
+        } else if (u == -1) {
             std::cout << "You have lost!\n";
         } else {
             std::cout << "It's a draw!\n";
