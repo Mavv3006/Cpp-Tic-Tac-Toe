@@ -29,11 +29,36 @@ int Minimax::value(int state, int player) {
     if (TicTacToe::finished(state)) {
         return TicTacToe::utility(state, player);
     }
-    int o = player ^ 1;
     std::vector<int> nextStates = TicTacToe::next_states(state, player);
     int maxValue = -2;
     for (int nextState : nextStates) {
-        int val = -STATIC_MEMOIZER(value)(nextState, o);
+        int val;
+        int idx = (nextState << 1) | player;
+
+        int cached_val = (arr[idx >> 4] >> ((idx & 0b1111) << 1)) & 0b11;
+
+        if (!cached_val) {
+            // berechne neu
+            val = -value(nextState, player ^ 1);
+            if (val == -1)
+                cached_val = 0b01;
+            if (val == 0)
+                cached_val = 0b11;
+            if (val == 1)
+                cached_val = 0b10;
+
+            // val &= 0b11;
+            arr[idx >> 4] = arr[idx >> 4] | (cached_val << ((idx & 0b1111) << 1));
+        } else {
+            // nehme Wert aus Array
+            // val = arr[idx >> 4];
+            if (cached_val == 0b10)
+                val = 1;
+            if (cached_val == 0b01)
+                val = -1;
+            if (cached_val == 0b11)
+                val = 0;
+        }
         if (val == 1) return 1;
         if (val > maxValue) maxValue = val;
     }
@@ -51,3 +76,5 @@ BestMove::BestMove(int val, int state) {
     this->state = state;
     this->val = val;
 }
+
+int Minimax::arr[1<<15] = {0};

@@ -22,6 +22,7 @@ private:
 
 public:
     static std::vector<int> calc_best_moves(int bestValue, int state, int player);
+    static int arr[1<<15];
 
 /**
  *
