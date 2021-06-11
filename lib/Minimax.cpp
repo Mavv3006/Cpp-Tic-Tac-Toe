@@ -26,6 +26,8 @@ std::vector<int> Minimax::calc_best_moves(int bestValue, int state, int player) 
 }
 
 int Minimax::value(int state, int player) {
+    int a = 0b11111111111111111111111111111111;
+    std::cout << a;
     if (TicTacToe::finished(state)) {
         return TicTacToe::utility(state, player);
     }
@@ -40,24 +42,29 @@ int Minimax::value(int state, int player) {
         if (!cached_val) {
             // berechne neu
             val = -value(nextState, player ^ 1);
-            if (val == -1)
-                cached_val = 0b01;
-            if (val == 0)
-                cached_val = 0b11;
-            if (val == 1)
-                cached_val = 0b10;
+            cached_val = (val & 0b11) ^ 0b10;
+            // if (val == -1)
+            //     cached_val = 0b01;
+            // if (val == 0)
+            //     cached_val = 0b11;
+            // if (val == 1)
+            //     cached_val = 0b10;
 
-            // val &= 0b11;
             arr[idx >> 4] = arr[idx >> 4] | (cached_val << ((idx & 0b1111) << 1));
         } else {
             // nehme Wert aus Array
             // val = arr[idx >> 4];
-            if (cached_val == 0b10)
-                val = 1;
-            if (cached_val == 0b01)
-                val = -1;
+            // & -1 sorgt wegen 2er-Komplement dafur, dass es 
+            val = (cached_val ^= 0b10);
             if (cached_val == 0b11)
-                val = 0;
+                val = -1;
+            
+            // if (cached_val == 0b10)
+            //     val = 1;
+            // if (cached_val == 0b01)
+            //     val = -1;
+            // if (cached_val == 0b11)
+            //     val = 0;
         }
         if (val == 1) return 1;
         if (val > maxValue) maxValue = val;
