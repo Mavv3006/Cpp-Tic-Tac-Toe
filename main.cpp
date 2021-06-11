@@ -15,14 +15,10 @@ void clearFile(std::string &fileName) {
     file.close();
 }
 
-void clearArray() {
-    memset(Minimax::arr, 0, sizeof(Minimax::arr));
-}
-
 void benchmark(std::string &fileName) {
     const int starting_state = 0, starting_player = 0;
     for (int i = 0; i < 50; i++) {
-        clearArray();
+        memset(Minimax::arr, 0, sizeof(Minimax::arr));
         {
             Timer timer{fileName};
             Minimax::value(starting_state, starting_player);
