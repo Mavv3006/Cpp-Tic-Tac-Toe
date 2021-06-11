@@ -34,7 +34,6 @@ int Minimax::value(int state, int player) {
     int maxValue = -2;
     for (int nextState : nextStates) {
         int val = -STATIC_MEMOIZER(value)(nextState, o);
-        if (val == 1) return 1;
         if (val > maxValue) maxValue = val;
     }
     return maxValue;
