@@ -7,7 +7,7 @@
 #include <Timer.h>
 #include "fstream"
 #include "iostream"
-#include "memoize.h"
+#include <cstring>
 
 void clearFile(std::string &fileName) {
     std::ofstream file;
@@ -15,10 +15,14 @@ void clearFile(std::string &fileName) {
     file.close();
 }
 
+void clearArray() {
+    memset(Minimax::arr, 0, sizeof(Minimax::arr));
+}
+
 void benchmark(std::string &fileName) {
     const int starting_state = 0, starting_player = 0;
     for (int i = 0; i < 50; i++) {
-        cache<int, int, int>->clear();
+        clearArray();
         {
             Timer timer{fileName};
             Minimax::value(starting_state, starting_player);
