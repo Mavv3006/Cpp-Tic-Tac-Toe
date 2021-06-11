@@ -5,12 +5,24 @@
 #if BENCHMARKING
 
 #include <Timer.h>
+#include "fstream"
+#include "iostream"
+#include "memoize.h"
 
-void benchmark() {
+void clearFile(std::string &fileName) {
+    std::ofstream file;
+    file.open(fileName, std::ofstream::out | std::ofstream::trunc);
+    file.close();
+}
+
+void benchmark(std::string &fileName) {
     const int starting_state = 0, starting_player = 0;
-    {
-        Timer timer;
-        Minimax::value(starting_state, starting_player);
+    for (int i = 0; i < 50; i++) {
+        cache<int, int, int>->clear();
+        {
+            Timer timer{fileName};
+            Minimax::value(starting_state, starting_player);
+        }
     }
 }
 
@@ -84,7 +96,9 @@ void play_game() {
 
 int main() {
 #if BENCHMARKING
-    benchmark();
+    std::string fileName = "master.txt";
+    clearFile(fileName);
+    benchmark(fileName);
 #else
     play_game();
 #endif

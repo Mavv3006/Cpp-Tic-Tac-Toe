@@ -17,8 +17,6 @@ struct BestMove {
 };
 
 class Minimax {
-private:
-    static int random(unsigned int upperBound);
 
 public:
     static std::vector<int> calc_best_moves(int bestValue, int state, int player);
@@ -51,6 +49,8 @@ public:
  * @param player a player of the game
  */
     static BestMove best_move(int state, int player);
+
+    static int random(unsigned int upperBound);
 };
 
 
