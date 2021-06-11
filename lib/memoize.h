@@ -8,6 +8,7 @@
 #include <map>
 #include "functional"
 #include <memory>
+#include "iostream"
 
 enum class Cache : unsigned int {
     NO_RECLAIM, RECLAIM
@@ -16,15 +17,18 @@ enum class Cache : unsigned int {
 template<typename Sig, Sig funcptr>
 struct static_memoizer;
 
+
+template<typename ReturnType, typename... Args>
+auto cache = std::make_shared<std::map<std::tuple<Args...>, ReturnType>>();
+
 template<typename ReturnType, typename... Args>
 std::function<ReturnType(Args...)>
 memoize(ReturnType (*func)(Args...)) {
-    auto cache = std::make_shared<std::map<std::tuple<Args...>, ReturnType>>();
     return ([=](Args... args) mutable {
         std::tuple<Args...> t(args...);
-        if (cache->find(t) == cache->end())
-            (*cache)[t] = func(args...);
-        return (*cache)[t];
+        if (cache<ReturnType, Args...>->find(t) == cache<ReturnType, Args...>->end())
+            (*cache<ReturnType, Args...>)[t] = func(args...);
+        return (*cache<ReturnType, Args...>)[t];
     });
 }
 
