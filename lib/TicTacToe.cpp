@@ -6,19 +6,9 @@
 #include "Util.h"
 #include "vector"
 
-int TicTacToe::markedCellsCount(int state) {
-    int markedCells = 0;
-    for (int i = 0; i < 18; i++) {
-        if (state & (1 << i)) {
-            markedCells++;
-        }
-    }
-    return markedCells;
-}
-
 std::vector<int> TicTacToe::empty(int state) {
     std::vector<int> resultVector;
-    resultVector.reserve(9 - markedCellsCount(state));
+    resultVector.reserve(9 - std::popcount<std::uint32_t>(state));
     for (int i = 0; i < 9; i++) {
         if (((state & (1 << i)) == 0) && ((state & (1 << (9 + i))) == 0)) {
             resultVector.push_back(i);

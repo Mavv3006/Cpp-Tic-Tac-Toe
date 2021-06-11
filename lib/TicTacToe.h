@@ -63,8 +63,6 @@ public:
      * @see finished
      */
     static bool final_msg(int state);
-
-    static int markedCellsCount(int state);
 };
 
 
