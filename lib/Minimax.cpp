@@ -17,7 +17,7 @@ std::vector<int> Minimax::calc_best_moves(int bestValue, int state, int player) 
     std::vector<int> bestMoves;
     bestMoves.reserve(nextStates.size());
     for (int nextState : nextStates) {
-        int nextValue = -value(nextState, Minimax::other(player));
+        int nextValue = -value(nextState, other(player));
         if (nextValue == bestValue) {
             bestMoves.push_back(nextState);
         }
