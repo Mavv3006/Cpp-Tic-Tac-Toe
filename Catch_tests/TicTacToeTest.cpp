@@ -110,8 +110,3 @@ TEST_CASE("same memory address for next_states result") {
     std::vector<int> ns2 = TicTacToe::next_states(1, player);
     REQUIRE(ns1.at(0) != ns2.at(0));
 }
-
-TEST_CASE("markedCellsCount function") {
-    int markedCells = TicTacToe::markedCellsCount(0b110010110111);
-    CHECK(markedCells == 8);
-}
